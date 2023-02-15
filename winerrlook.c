@@ -14,13 +14,10 @@ int main(int argc, char *argv[]) {
   int modules = argc - 2;
   char msg[65535] = {0};
 
-  DWORD res = 0, flags = FORMAT_MESSAGE_FROM_SYSTEM;
-  HMODULE hm = INVALID_HANDLE_VALUE;
-
-  res = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, HRESULT_CODE(code), 0,
+  DWORD res = FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, HRESULT_CODE(code), 0,
                        msg, sizeof(msg), NULL);
   for (int i = 0; i < modules && res == 0; i++) {
-    hm = LoadLibraryA(argv[i + 1]);
+    HMODULE hm = LoadLibraryA(argv[i + 1]);
     module_name = argv[i + 1];
     res =
         FormatMessageA(FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_FROM_SYSTEM,
